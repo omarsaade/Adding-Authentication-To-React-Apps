@@ -1,10 +1,12 @@
 import { useState, useRef } from 'react';
-
 import classes from './AuthForm.module.css';
+
 
 const AuthForm = () => {
 
+
   const [isLogin, setIsLogin] = useState(true);
+
 
   const emailInputRef = useRef();
   const passwordInputRef = useRef();
@@ -12,6 +14,8 @@ const AuthForm = () => {
   const switchAuthModeHandler = () => {
     setIsLogin((prevState) => !prevState);
   };
+
+
 
 
   const submitHandler = (event) => {
