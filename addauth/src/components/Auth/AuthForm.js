@@ -28,6 +28,7 @@ const AuthForm = () => {
 
       //hello
     } else {
+      // send http request with fetch function
       fetch("https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyC6St6YTqMuqE2_3jy09LrAHqTuXGBOBFU",
         {
           method: 'POST',
@@ -37,14 +38,17 @@ const AuthForm = () => {
             returnSecureToken: true,
           }),
           headers: { 'Content-Type': 'application/json' }
+          //handling errors and handling response
         }).then((res) => {
           if (res.ok) {
             //...
             console.log(res);
           } else {
+            // this response data hold some extra info about error
             return res.json().then((data) => {
               //show an error modal
               // console.log(data);
+              // console.log(data.error.message);
             });
           }
         });
