@@ -1,16 +1,18 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useContext } from 'react';
+import AuthContext from '../../store/auth-context';
 import classes from './AuthForm.module.css';
 
 
 const AuthForm = () => {
 
+  const emailInputRef = useRef();
+  const passwordInputRef = useRef();
+
+  const authCtx = useContext(AuthContext);
 
   const [isLogin, setIsLogin] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
 
-
-  const emailInputRef = useRef();
-  const passwordInputRef = useRef();
 
   const switchAuthModeHandler = () => {
     setIsLogin((prevState) => !prevState);
@@ -37,36 +39,39 @@ const AuthForm = () => {
     // https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
 
     // send http request with fetch function
-    fetch(url, {
-      method: 'POST',
-      body: JSON.stringify({
-        email: enteredEmail,
-        password: enteredPassword,
-        returnSecureToken: true,
-      }),
-      headers: { 'Content-Type': 'application/json' }
-      //handling errors and handling response
-    }).then(async (res) => {
-      //And once we got a response, so here,
-      //no matter if it's an error or not, I wanna set is loading to false.
-      setIsLoading(false);
-      if (res.ok) {
-        return res.json(); // console.log(res);
-      } else {
-        // this response data hold some extra info about error
-        const data = await res.json();
-        //show an error message
-        // console.log(data);
-        // console.log(data.error.message);
-        let errorMessage = 'Authentication failed!';
-        // if (data && data.error && data.error.message) {
-        //   errorMessage = data.error.message;
-        // }
-        throw new Error(errorMessage);
-      }
-    })
+    fetch(url,
+      {
+        method: 'POST',
+        body: JSON.stringify({
+          email: enteredEmail,
+          password: enteredPassword,
+          returnSecureToken: true,
+        }),
+        headers: { 'Content-Type': 'application/json' }
+        //handling errors and handling response
+      })
+      .then(async (res) => {
+        //And once we got a response, so here,
+        //no matter if it's an error or not, I wanna set is loading to false.
+        setIsLoading(false);
+        if (res.ok) {
+          return res.json(); // console.log(res);
+        } else {
+          // this response data hold some extra info about error
+          const data = await res.json();
+          //show an error message
+          // console.log(data);
+          // console.log(data.error.message);
+          let errorMessage = 'Authentication failed!';
+          // if (data && data.error && data.error.message) {
+          //   errorMessage = data.error.message;
+          // }
+          throw new Error(errorMessage);
+        }
+      })
       .then((data) => {
-        console.log(data);
+        // console.log(data);
+        authCtx.login(data.idToken)
       })
       .catch((err) => {
         alert(err.message);
