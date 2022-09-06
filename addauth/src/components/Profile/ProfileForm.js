@@ -1,9 +1,11 @@
 import React, { useRef, useContext } from 'react'
 import AuthContext from '../../store/auth-context';
+import { useHistory } from 'react-router-dom';
 
 import classes from './ProfileForm.module.css';
 
 const ProfileForm = () => {
+  const history = useHistory();
   const newPasswordInputRef = useRef();
 
   const authCtx = useContext(AuthContext);
@@ -26,6 +28,7 @@ const ProfileForm = () => {
       }
     }).then(res => {
       //assumption: Always succeeds!
+      history.replace('/');
     })
 
 
@@ -37,6 +40,7 @@ const ProfileForm = () => {
     <form className={classes.form} onSubmit={submitHandler}>
       <div className={classes.control}>
         <label htmlFor='new-password'>New Password</label>
+        {/* basic validation yufadal ma ktir nesta3mla */}
         <input type='password' minLength="7" id='new-password' ref={newPasswordInputRef} />
       </div>
       <div className={classes.action}>

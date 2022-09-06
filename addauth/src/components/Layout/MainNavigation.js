@@ -7,6 +7,14 @@ const MainNavigation = () => {
   const authCtx = useContext(AuthContext);
   const isLoggedIn = authCtx.isLoggedIn;
 
+  const logoutHandler = () => {
+    authCtx.logout();
+    //optional redirect the user
+    // And that will be navigation guards, protecting pages in our front end react auth.
+  }
+
+
+
   return (
     <header className={classes.header}>
       <Link to='/'>
@@ -23,7 +31,7 @@ const MainNavigation = () => {
           </li>}
 
           {isLoggedIn && <li>
-            <button>Logout</button>
+            <button onClick={logoutHandler}>Logout</button>
           </li>}
 
         </ul>
