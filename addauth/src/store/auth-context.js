@@ -9,24 +9,41 @@ const AuthContext = React.createContext({
     logout: () => { }
 });
 
+
+const calculateRemainingTime = (expirationTime) => {
+    const currentTime = new Date().getTime();
+    const adjExpirationTime = new Date(expirationTime).getTime();
+    const remainingDuration = adjExpirationTime - currentTime;
+    return remainingDuration;
+}
+
 //infer : istantej
 
 export const AuthContextProvider = (props) => {
-
-    const [token, setToken] = useState(null);
+    const initialToken = localStorage.getItem('token');
+    // initially initialToken is undefined
+    const [token, setToken] = useState(initialToken);
     //false cz there is no token / we use casting here 
     // So we don't even need a separate state for this.
     // We can infer it from this state.
     const userIsLoggedIn = !!token;
 
-    const loginHandler = (token) => {
-        setToken(token);
-    }
+
 
     const logoutHandler = () => {
         setToken(null);
+        localStorage.removeItem('token');
     }
 
+
+
+    const loginHandler = (token, expirationTime) => {
+        setToken(token);
+        localStorage.setItem('token', token);
+
+        const remainingTime = calculateRemainingTime(expirationTime);
+        setTimeout(logoutHandler, remainingTime);
+    }
 
 
     const contextValue = {
