@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 
 
+
 //Default Value
 const AuthContext = React.createContext({
     token: '',
@@ -10,15 +11,17 @@ const AuthContext = React.createContext({
 });
 
 
+// Methods
 const calculateRemainingTime = (expirationTime) => {
-    const currentTime = new Date().getTime();
-    const adjExpirationTime = new Date(expirationTime).getTime();
-    const remainingDuration = adjExpirationTime - currentTime;
-    return remainingDuration;
+    const currentTime = new Date().getTime(); //time now
+    const adjExpirationTime = new Date(expirationTime).getTime();//time baad se3a
+    const remainingDuration = adjExpirationTime - currentTime;//
+    return remainingDuration; //nes se3a
 }
 
-//infer : istantej
 
+
+//infer : istantej
 export const AuthContextProvider = (props) => {
     const initialToken = localStorage.getItem('token');
     // initially initialToken is undefined
@@ -26,7 +29,9 @@ export const AuthContextProvider = (props) => {
     //false cz there is no token / we use casting here 
     // So we don't even need a separate state for this.
     // We can infer it from this state.
-    const userIsLoggedIn = !!token;
+    const userIsLoggedIn = !!token;//true
+
+
 
 
 
@@ -34,6 +39,8 @@ export const AuthContextProvider = (props) => {
         setToken(null);
         localStorage.removeItem('token');
     }
+
+
 
 
 
@@ -46,6 +53,8 @@ export const AuthContextProvider = (props) => {
     }
 
 
+
+
     const contextValue = {
         token: token,
         isLoggedIn: userIsLoggedIn,
@@ -56,6 +65,8 @@ export const AuthContextProvider = (props) => {
 
     return <AuthContext.Provider value={contextValue}>{props.children}</AuthContext.Provider>
 }
+
+
 
 
 export default AuthContext;

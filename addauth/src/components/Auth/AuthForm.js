@@ -22,12 +22,14 @@ const AuthForm = () => {
 
 
 
+
   const submitHandler = (event) => {
     event.preventDefault();
     const enteredEmail = emailInputRef.current.value;
     const enteredPassword = passwordInputRef.current.value;
     setIsLoading(true);
     let url;
+
 
 
     if (isLogin) {
@@ -71,10 +73,12 @@ const AuthForm = () => {
         }
       })
       .then((data) => {
-        // console.log(data);
+        // console.log(data);//3600 * 1000 = 3 600 000
+        // seconds to milliseocds dareb 1000
         const expirationTime = new Date(
           new Date().getTime() + +data.expiresIn * 1000
         );
+        //se3a
         authCtx.login(data.idToken, expirationTime.toISOString());
         history.replace('/');
 
