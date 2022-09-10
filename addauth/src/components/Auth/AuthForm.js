@@ -61,7 +61,7 @@ const AuthForm = () => {
           return res.json(); // console.log(res);
         } else {
           // this response data hold some extra info about error
-          const data = await res.json();
+          // const data = await res.json();
           //show an error message
           // console.log(data);
           // console.log(data.error.message);
