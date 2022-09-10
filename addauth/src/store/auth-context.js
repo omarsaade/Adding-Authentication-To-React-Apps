@@ -14,10 +14,10 @@ const AuthContext = React.createContext({
 
 // Methods
 const calculateRemainingTime = (expirationTime) => {
-    const currentTime = new Date().getTime(); //time now
-    const adjExpirationTime = new Date(expirationTime).getTime();//time baad se3a
-    const remainingDuration = adjExpirationTime - currentTime;//
-    return remainingDuration; //nes se3a
+    const currentTime = new Date().getTime(); //time now 11000ms
+    const adjExpirationTime = new Date(expirationTime).getTime();//time baad se3a 12000ms
+    const remainingDuration = adjExpirationTime - currentTime;// 1000ms
+    return remainingDuration; //nes se3a 1000ms
 }
 
 
@@ -50,7 +50,8 @@ export const AuthContextProvider = (props) => {
         localStorage.setItem('token', token);
 
         const remainingTime = calculateRemainingTime(expirationTime);
-        setTimeout(logoutHandler, remainingTime);
+        setTimeout(logoutHandler, remainingTime); //1000ms
+
     }
 
 

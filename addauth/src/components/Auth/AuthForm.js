@@ -80,6 +80,7 @@ const AuthForm = () => {
         );
         //se3a
         authCtx.login(data.idToken, expirationTime.toISOString());
+        // authCtx.login(data.idToken, data.expiresIn * 1000);
         history.replace('/');
 
       })
